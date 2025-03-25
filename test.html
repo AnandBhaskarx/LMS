@@ -1,0 +1,52 @@
+<section>
+    <div class="modal fade" id="StudentSignUpModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="StudentSignUpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4 fw-bold" id="StudentSignUpModalLabel">Student Sign Up</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" class="p-3 animated-form" id="SignUpForm">
+                        <div class="modal-footer d-flex justify-content-between align-items-center">
+                            <span id="successMsg" class="fs-5 text-success fw-bold"></span>
+                            <div>
+                                <button type="button" class="btn btn-primary px-4 py-2 shadow-sm animated-btn" id="SignUpSubmitBtn">
+                                    <i class="fas fa-user-plus"></i> Sign Up
+                                </button>
+                                <button type="reset" class="btn btn-secondary px-4 py-2 shadow-sm animated-btn" data-bs-dismiss="modal">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('SignUpSubmitBtn').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Get form data
+            const name = document.getElementById('StudentSignUpName').value;
+            const email = document.getElementById('StudentSignUpEmail').value;
+            const password = document.getElementById('StudentSignUpPassword').value;
+
+            // Send data to a PHP script for processing
+            fetch('process_signup.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Handle response from PHP script (e.g., show success message)
+                alert(data); // For testing, replace with better UI
+            });
+        });
+    </script>
+</section>
